@@ -1,7 +1,4 @@
 package com.auth.Auth.controlllers;
-
-import java.util.List;
-
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,14 +9,21 @@ import org.springframework.security.core.Authentication;
 
 
 import com.auth.Auth.entities.User;
-import com.auth.Auth.services.UserService;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @CrossOrigin
 @RestController
+@Tag(name = "Usuarios", description = "Operaciones relacionadas con usuarios")
 @RequestMapping("/api/users")
+
+@SecurityRequirement(name = "bearerAuth")
 public class UserController {
 
     @GetMapping("/me")
+    @Operation(summary = "Obtener usuario autenticado", description = "Obtener el usuario autenticado en el sistema")
     public ResponseEntity<User> authenticatedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 

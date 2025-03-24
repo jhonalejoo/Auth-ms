@@ -13,9 +13,13 @@ import com.auth.Auth.responses.LoginResponse;
 import com.auth.Auth.services.AuthenticationService;
 import com.auth.Auth.services.JwtService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/api/auth")
+@Tag(name = "Autenticacion", description = "Operaciones relacionadas con autenticacion")
 public class AuthenticationController {
 
     private final JwtService jwtService;
@@ -27,6 +31,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
+    @Operation(summary = "Autenticar usuario", description = "Autenticar un usuario y generar un token JWT")
     public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUserDto loginUserDto) {
         User authenticatedUser = authenticationService.authenticate(loginUserDto);
 
