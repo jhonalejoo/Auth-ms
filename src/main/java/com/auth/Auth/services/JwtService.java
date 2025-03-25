@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
+import com.auth.Auth.entities.User;
+
 @Service
 public class JwtService {
     @Value("${security.jwt.secret-key}")
@@ -31,7 +33,14 @@ public class JwtService {
         return claimsResolver.apply(claims);
     }
 
+    public String generateToken(User user) {
+        Map<String, Object> extraClaims = new HashMap<>();
+        extraClaims.put("userId", user.getId());  // 🔥 Aquí agregas el userId al token
+        return generateToken(extraClaims, user);
+    }
+
     public String generateToken(UserDetails userDetails) {
+        System.out.println("Generating token" + userDetails+"");
         return generateToken(new HashMap<>(), userDetails);
     }
 
